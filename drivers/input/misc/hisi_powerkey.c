@@ -33,6 +33,8 @@
 #include <linux/wakelock.h>
 #include <asm/irq.h>
 
+#include <linux/dt2w.h>
+
 #include <linux/hisi/util.h>
 #ifdef CONFIG_HISI_HI6XXX_PMIC
 #include <soc_smart_interface.h>
@@ -284,6 +286,8 @@ static int hisi_powerkey_probe(struct platform_device *pdev)
 		ret = -ENOENT;
 		goto input_err;
 	}
+
+	register_power_input(info->idev);
 
 	platform_set_drvdata(pdev, info);
 
