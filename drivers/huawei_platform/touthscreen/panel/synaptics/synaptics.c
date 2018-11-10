@@ -15,11 +15,8 @@
 #include <dsm/dsm_pub.h>
 #endif
 
-
 #include <linux/input.h>
 #include <linux/dt2w.h>
-#define POWER_KEY_RELEASE	(0)
-#define POWER_KEY_PRESS		(1)
 
 #define SYNAPTICS_CHIP_INFO "synaptics-"
 #define PLK_FPC_UNCLK_ENABLE_FLAG "plk-fpc-unclock-flag"
@@ -147,7 +144,6 @@ static int synaptics_chip_get_capacitance_test_type(struct ts_test_type_info *in
 static int synaptics_rmi4_dsm_debug(void);
 #endif
 static int synaptics_regs_operate(struct ts_regs_info *info);
-
 
 static struct input_dev *idev;
 
@@ -4209,9 +4205,9 @@ static int synaptics_rmi4_key_gesture_report(struct synaptics_rmi4_data *rmi4_da
 	case DOUBLE_CLICK_WAKEUP:
 		if (IS_APP_ENABLE_GESTURE(GESTURE_DOUBLE_CLICK) & gesture_report_info->easy_wakeup_gesture) {
 			if(idev) {
-			    input_report_key(idev, KEY_POWER, POWER_KEY_PRESS);
+			    input_report_key(idev, KEY_POWER, 1);
 			    input_sync(idev);
-			    input_report_key(idev, KEY_POWER, POWER_KEY_RELEASE);
+			    input_report_key(idev, KEY_POWER, 0);
 			    input_sync(idev);
 			    TS_LOG_INFO("Meticulus: KEY_POWER reported!\n");
 			} else {
